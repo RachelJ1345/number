@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Save Phone Number</title>
+</head>
+<body>
+  <h1>전화번호를 입력해주세요.</h1>
+  <form id="phoneForm">
+    <label for="phone">(010-1234-5678) 형식으로 입력:</label>
+    <input type="text" id="phone" name="phone" required>
+    <button type="submit">제출</button>
+  </form>
+
+  <script>
+    // Form submission logic
+    document.getElementById('phoneForm').addEventListener('submit', async (e) => {
+      e.preventDefault(); // Prevent form from reloading the page
+
+      const phoneNumber = document.getElementById('phone').value;
+
+      try {
+        const response = await fetch('http://localhost:3000/save-phone', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ phone: phoneNumber }),
+        });
+
+        if (response.ok) {
+          alert('저장완료!');
+        } else {
+          alert('저장실패 다시 확인해주세요.');
+        }
+      } catch (error) {
+        console.error('Error:', error);
+        alert('오류.');
+      }
+    });
+  </script>
+</body>
+</html>
